@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/LoginFragment">
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="com.example.loginexample.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_LoginFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment"
+            app:popUpTo="@id/LoginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="com.example.loginexample.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_RegisterFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/PasswordFragment"
+        android:name="com.example.loginexample.PasswordFragment"
+        android:label="fragment_password"
+        tools:layout="@layout/fragment_password" >
+        <action
+            android:id="@+id/action_PasswordFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment"
+            app:popUpTo="@id/LoginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.example.loginexample.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_ProfileFragment_to_PasswordFragment"
+            app:destination="@id/PasswordFragment" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment"
+            app:popUpTo="@id/ProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
