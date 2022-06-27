@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.loginexample.databinding.FragmentPasswordBinding
@@ -36,6 +37,10 @@ class PasswordFragment : Fragment() {
                     binding.etPasswordConfirm.requestFocus()
                     binding.etPasswordConfirm.error = getString(R.string.please_type_same_password)
                 } else {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.btSubmit.visibility = View.INVISIBLE
+                    binding.etPasswordNew.visibility = View.INVISIBLE
+                    binding.etPasswordConfirm.visibility = View.INVISIBLE
                     firebaseAuth.currentUser!!.updatePassword(password_new)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
@@ -60,6 +65,10 @@ class PasswordFragment : Fragment() {
                                             .show()
                                     }
                                 }
+                                binding.progressBar.visibility = View.INVISIBLE
+                                binding.btSubmit.visibility = View.VISIBLE
+                                binding.etPasswordNew.visibility = View.VISIBLE
+                                binding.etPasswordConfirm.visibility = View.VISIBLE
                             }
                         }
                 }

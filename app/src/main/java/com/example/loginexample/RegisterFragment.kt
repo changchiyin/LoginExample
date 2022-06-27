@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.loginexample.databinding.FragmentRegisterBinding
@@ -28,7 +29,6 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.btRegister.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
@@ -41,6 +41,12 @@ class RegisterFragment : Fragment() {
                     binding.etPasswordConfirm.error = getString(R.string.please_type_same_password)
                 } else{
                     //嘗試註冊
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.btRegister.visibility = View.INVISIBLE
+                    binding.etEmail.visibility = View.INVISIBLE
+                    binding.etPassword.visibility = View.INVISIBLE
+                    binding.etUsername.visibility = View.INVISIBLE
+                    binding.etPasswordConfirm.visibility = View.INVISIBLE
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful){
@@ -80,6 +86,12 @@ class RegisterFragment : Fragment() {
                                         Toast.makeText(context, exception, Toast.LENGTH_SHORT).show()
                                     }
                                 }
+                                binding.progressBar.visibility = View.INVISIBLE
+                                binding.btRegister.visibility = View.VISIBLE
+                                binding.etEmail.visibility = View.VISIBLE
+                                binding.etPassword.visibility = View.VISIBLE
+                                binding.etUsername.visibility = View.VISIBLE
+                                binding.etPasswordConfirm.visibility = View.VISIBLE
                             }
                         }
                 }

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/LoginFragment"
         android:name="com.example.loginexample.LoginFragment"
-        android:label="fragment_login"
+        android:label=""
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_LoginFragment_to_ProfileFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/RegisterFragment"
         android:name="com.example.loginexample.RegisterFragment"
-        android:label="fragment_register"
+        android:label=""
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_RegisterFragment_to_ProfileFragment"
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/PasswordFragment"
         android:name="com.example.loginexample.PasswordFragment"
-        android:label="fragment_password"
+        android:label=""
         tools:layout="@layout/fragment_password" >
         <action
             android:id="@+id/action_PasswordFragment_to_LoginFragment"
@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/ProfileFragment"
         android:name="com.example.loginexample.ProfileFragment"
-        android:label="fragment_profile"
+        android:label=""
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_ProfileFragment_to_PasswordFragment"
