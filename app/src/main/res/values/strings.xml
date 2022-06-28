@@ -81,4 +81,5 @@
     <string name="invalid_password_format">invalid password format</string>
     <string name="password_is_too_weak">password is too weak</string>
     <string name="please_type_username">please type username</string>
+    <string name="please_log_in_again_and_try_again">please log in again and try again</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.loginexample.databinding.FragmentPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import timber.log.Timber
 
 class PasswordFragment : Fragment() {
     private var _binding: FragmentPasswordBinding? = null
@@ -48,7 +49,12 @@ class PasswordFragment : Fragment() {
                                 Toast.makeText(context, getString(R.string.your_password_has_changed), Toast.LENGTH_SHORT).show()
                                 findNavController().navigate(R.id.action_PasswordFragment_to_LoginFragment)
                             } else{
+                                binding.progressBar.visibility = View.INVISIBLE
+                                binding.btSubmit.visibility = View.VISIBLE
+                                binding.etPasswordNew.visibility = View.VISIBLE
+                                binding.etPasswordConfirm.visibility = View.VISIBLE
                                 val exception = task.exception!!.toString()
+                                Timber.e(exception)
                                 when {
                                     exception.contains("The password is invalid") -> {
                                         binding.etPasswordNew.requestFocus()
@@ -60,15 +66,16 @@ class PasswordFragment : Fragment() {
                                         binding.etPasswordNew.error =
                                             getString(R.string.password_is_too_weak)
                                     }
+                                    exception.contains("Log in again") -> {
+                                        binding.etPasswordNew.requestFocus()
+                                        binding.etPasswordNew.error =
+                                            getString(R.string.please_log_in_again_and_try_again)
+                                    }
                                     else -> {
                                         Toast.makeText(context, exception, Toast.LENGTH_SHORT)
                                             .show()
                                     }
                                 }
-                                binding.progressBar.visibility = View.INVISIBLE
-                                binding.btSubmit.visibility = View.VISIBLE
-                                binding.etPasswordNew.visibility = View.VISIBLE
-                                binding.etPasswordConfirm.visibility = View.VISIBLE
                             }
                         }
                 }

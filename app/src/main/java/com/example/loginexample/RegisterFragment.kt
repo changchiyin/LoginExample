@@ -63,6 +63,12 @@ class RegisterFragment : Fragment() {
                                     }
                             } else{
                                 //如果註冊失敗
+                                binding.progressBar.visibility = View.INVISIBLE
+                                binding.btRegister.visibility = View.VISIBLE
+                                binding.etEmail.visibility = View.VISIBLE
+                                binding.etPassword.visibility = View.VISIBLE
+                                binding.etUsername.visibility = View.VISIBLE
+                                binding.etPasswordConfirm.visibility = View.VISIBLE
                                 val exception = task.exception!!.toString()
                                 Timber.e(exception)
                                 when{
@@ -86,12 +92,6 @@ class RegisterFragment : Fragment() {
                                         Toast.makeText(context, exception, Toast.LENGTH_SHORT).show()
                                     }
                                 }
-                                binding.progressBar.visibility = View.INVISIBLE
-                                binding.btRegister.visibility = View.VISIBLE
-                                binding.etEmail.visibility = View.VISIBLE
-                                binding.etPassword.visibility = View.VISIBLE
-                                binding.etUsername.visibility = View.VISIBLE
-                                binding.etPasswordConfirm.visibility = View.VISIBLE
                             }
                         }
                 }

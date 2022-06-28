@@ -29,4 +29,5 @@
     <string name="invalid_password_format">錯誤的密碼格式</string>
     <string name="password_is_too_weak">密碼太簡單</string>
     <string name="please_type_username">請輸入使用者名稱</string>
+    <string name="please_log_in_again_and_try_again">請重新登入並再試一次</string>
 </resources>
