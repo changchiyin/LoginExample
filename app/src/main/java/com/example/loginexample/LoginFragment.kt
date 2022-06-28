@@ -36,6 +36,7 @@ class LoginFragment : Fragment() {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
             if(email.isNotBlank() && password.isNotBlank()){
+                //顯示轉圈圈 & 隱藏其他物件
                 binding.progressBar.visibility = View.VISIBLE
                 binding.btLogin.visibility = View.INVISIBLE
                 binding.btRegister.visibility = View.INVISIBLE
@@ -43,6 +44,7 @@ class LoginFragment : Fragment() {
                 binding.etPassword.visibility = View.INVISIBLE
                 Timber.e("email:" + email)
                 Timber.e("password:" + password)
+                //嘗試登入
                 firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                     if (task.isSuccessful){
@@ -53,6 +55,7 @@ class LoginFragment : Fragment() {
                     } else{
                         //如果登入失敗
                         Toast.makeText(context, getString(R.string.email_or_password_error), Toast.LENGTH_SHORT).show()
+                        //隱藏轉圈圈 & 顯示其他物件
                         binding.progressBar.visibility = View.INVISIBLE
                         binding.btLogin.visibility = View.VISIBLE
                         binding.btRegister.visibility = View.VISIBLE
@@ -70,6 +73,7 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+
         binding.btRegister.setOnClickListener {
             findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
         }
