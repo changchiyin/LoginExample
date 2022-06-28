@@ -9,7 +9,7 @@
         android:id="@+id/LoginFragment"
         android:name="com.example.loginexample.LoginFragment"
         android:label=""
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_LoginFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment"
@@ -31,7 +31,7 @@
         android:id="@+id/RegisterFragment"
         android:name="com.example.loginexample.RegisterFragment"
         android:label=""
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_RegisterFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment"
@@ -46,7 +46,7 @@
         android:id="@+id/PasswordFragment"
         android:name="com.example.loginexample.PasswordFragment"
         android:label=""
-        tools:layout="@layout/fragment_password" >
+        tools:layout="@layout/fragment_password">
         <action
             android:id="@+id/action_PasswordFragment_to_LoginFragment"
             app:destination="@id/LoginFragment"
@@ -61,7 +61,7 @@
         android:id="@+id/ProfileFragment"
         android:name="com.example.loginexample.ProfileFragment"
         android:label=""
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_ProfileFragment_to_PasswordFragment"
             app:destination="@id/PasswordFragment"

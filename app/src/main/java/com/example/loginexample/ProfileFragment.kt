@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.loginexample.databinding.FragmentProfileBinding
@@ -27,11 +26,12 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(firebaseAuth.currentUser == null){
+        if (firebaseAuth.currentUser == null) {
             //如果還沒登入
             findNavController().navigate(R.id.action_ProfileFragment_to_LoginFragment)
-        } else{
-            binding.tvProfile.text = getString(R.string.hello) + firebaseAuth.currentUser!!.displayName
+        } else {
+            binding.tvProfile.text =
+                getString(R.string.hello) + firebaseAuth.currentUser!!.displayName
         }
 
         binding.btChangePassword.setOnClickListener {
@@ -40,7 +40,8 @@ class ProfileFragment : Fragment() {
 
         binding.btLogout.setOnClickListener {
             firebaseAuth.signOut()
-            Toast.makeText(context, getString(R.string.logout_successful), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.logout_successful), Toast.LENGTH_SHORT)
+                .show()
             findNavController().navigate(R.id.action_ProfileFragment_to_LoginFragment)
         }
     }

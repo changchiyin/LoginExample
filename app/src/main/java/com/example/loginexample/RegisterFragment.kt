@@ -1,11 +1,13 @@
 package com.example.loginexample
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.loginexample.databinding.FragmentRegisterBinding
@@ -34,13 +36,14 @@ class RegisterFragment : Fragment() {
             val password = binding.etPassword.text.toString()
             val password_confirm = binding.etPasswordConfirm.text.toString()
             val username = binding.etUsername.text.toString()
-            if(username.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password_confirm.isNotBlank()){
-                if (password != password_confirm){
+            if (username.isNotBlank() && email.isNotBlank() && password.isNotBlank() && password_confirm.isNotBlank()) {
+                if (password != password_confirm) {
                     //密碼輸入不一樣
                     binding.etPasswordConfirm.requestFocus()
                     binding.etPasswordConfirm.error = getString(R.string.please_type_same_password)
-                } else{
+                } else {
                     //嘗試註冊
+                    hideKeyboard()
                     binding.progressBar.visibility = View.VISIBLE
                     binding.btRegister.visibility = View.INVISIBLE
                     binding.etEmail.visibility = View.INVISIBLE
@@ -49,7 +52,7 @@ class RegisterFragment : Fragment() {
                     binding.etPasswordConfirm.visibility = View.INVISIBLE
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
-                            if (task.isSuccessful){
+                            if (task.isSuccessful) {
                                 //如果註冊成功
                                 val profileUpdates = userProfileChangeRequest {
                                     displayName = binding.etUsername.text.toString()
@@ -57,11 +60,15 @@ class RegisterFragment : Fragment() {
                                 firebaseAuth.currentUser!!.updateProfile(profileUpdates)
                                     .addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
-                                            Toast.makeText(context, getString(R.string.successful_registration), Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(
+                                                context,
+                                                getString(R.string.successful_registration),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                             findNavController().navigate(R.id.action_RegisterFragment_to_ProfileFragment)
                                         }
                                     }
-                            } else{
+                            } else {
                                 //如果註冊失敗
                                 binding.progressBar.visibility = View.INVISIBLE
                                 binding.btRegister.visibility = View.VISIBLE
@@ -71,32 +78,37 @@ class RegisterFragment : Fragment() {
                                 binding.etPasswordConfirm.visibility = View.VISIBLE
                                 val exception = task.exception!!.toString()
                                 Timber.e(exception)
-                                when{
+                                when {
                                     exception.contains("email address is already in use") -> {
                                         binding.etEmail.requestFocus()
-                                        binding.etEmail.error = getString(R.string.email_already_use)
+                                        binding.etEmail.error =
+                                            getString(R.string.email_already_use)
                                     }
                                     exception.contains("The email address is badly formatted.") -> {
                                         binding.etEmail.requestFocus()
-                                        binding.etEmail.error = getString(R.string.invalid_email_format)
+                                        binding.etEmail.error =
+                                            getString(R.string.invalid_email_format)
                                     }
                                     exception.contains("The password is invalid") -> {
                                         binding.etPassword.requestFocus()
-                                        binding.etPassword.error = getString(R.string.invalid_password_format)
+                                        binding.etPassword.error =
+                                            getString(R.string.invalid_password_format)
                                     }
                                     exception.contains("WeakPassword") -> {
                                         binding.etPassword.requestFocus()
-                                        binding.etPassword.error = getString(R.string.password_is_too_weak)
+                                        binding.etPassword.error =
+                                            getString(R.string.password_is_too_weak)
                                     }
                                     else -> {
-                                        Toast.makeText(context, exception, Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, exception, Toast.LENGTH_SHORT)
+                                            .show()
                                     }
                                 }
                             }
                         }
                 }
-            } else{
-                when{
+            } else {
+                when {
                     username.isBlank() -> {
                         binding.etUsername.requestFocus()
                         binding.etUsername.error = getString(R.string.please_type_username)
@@ -111,7 +123,8 @@ class RegisterFragment : Fragment() {
                     }
                     password_confirm.isBlank() -> {
                         binding.etPasswordConfirm.requestFocus()
-                        binding.etPasswordConfirm.error = getString(R.string.please_type_confirm_password)
+                        binding.etPasswordConfirm.error =
+                            getString(R.string.please_type_confirm_password)
                     }
                 }
             }
@@ -121,5 +134,19 @@ class RegisterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
