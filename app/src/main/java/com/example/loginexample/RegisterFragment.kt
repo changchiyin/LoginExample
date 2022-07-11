@@ -51,15 +51,15 @@ class RegisterFragment : Fragment() {
                     binding.etUsername.visibility = View.INVISIBLE
                     binding.etPasswordConfirm.visibility = View.INVISIBLE
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
+                        .addOnCompleteListener { task1 ->
+                            if (task1.isSuccessful) {
                                 //如果註冊成功
                                 val profileUpdates = userProfileChangeRequest {
                                     displayName = binding.etUsername.text.toString()
                                 }
                                 firebaseAuth.currentUser!!.updateProfile(profileUpdates)
-                                    .addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
+                                    .addOnCompleteListener { task2 ->
+                                        if (task2.isSuccessful) {
                                             Toast.makeText(
                                                 context,
                                                 getString(R.string.successful_registration),
@@ -76,7 +76,7 @@ class RegisterFragment : Fragment() {
                                 binding.etPassword.visibility = View.VISIBLE
                                 binding.etUsername.visibility = View.VISIBLE
                                 binding.etPasswordConfirm.visibility = View.VISIBLE
-                                val exception = task.exception!!.toString()
+                                val exception = task1.exception!!.toString()
                                 Timber.e(exception)
                                 when {
                                     exception.contains("email address is already in use") -> {
